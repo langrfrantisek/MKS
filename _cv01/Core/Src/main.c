@@ -40,7 +40,9 @@
 
 /* Private variables ---------------------------------------------------------*/
  UART_HandleTypeDef huart2;
- uint8_t pole[32] = {1,0,1,0,1,0,0,1,1,1,0,1,1,1,0,1,1,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0};
+ //uint8_t pole[32] = {1,0,1,0,1,0,0,1,1,1,0,1,1,1,0,1,1,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0};
+ uint32_t morse = 0b10101001110111011100101010000000;
+ uint32_t control = 0b10000000000000000000000000000000;
 
 /* USER CODE BEGIN PV */
 
@@ -99,12 +101,20 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  for (uint8_t i=0; i<=31; i++)
+	  /*for (uint8_t i=0; i<=31; i++)
 	  {
 		  if (pole[i] == 1) HAL_GPIO_WritePin(LED_L_GPIO_Port, LED_L_Pin, SET);
 		  else HAL_GPIO_WritePin(LED_L_GPIO_Port, LED_L_Pin, RESET);
 		  HAL_Delay(100);
+	  }*/
+	  for (uint8_t i=0; i<=31; i++)
+	  {
+		  if ((morse & control) == control) HAL_GPIO_WritePin(LED_L_GPIO_Port, LED_L_Pin, SET);
+		  else HAL_GPIO_WritePin(LED_L_GPIO_Port, LED_L_Pin, RESET);
+		  morse <<= 1;
+		  HAL_Delay(100);
 	  }
+	  morse = 0b10101001110111011100101010000000;
   }
   /* USER CODE END 3 */
 }
