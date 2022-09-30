@@ -96,11 +96,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
-	  HAL_Delay(1000);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, RESET);
-	  HAL_Delay(200);
+	  uint8_t c;
+	  HAL_UART_Receive(&huart2, &c, 1, HAL_MAX_DELAY);
+	  HAL_UART_Transmit(&huart2, &c, 1, HAL_MAX_DELAY);
   }
   /* USER CODE END 3 */
 }
